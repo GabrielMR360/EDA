@@ -1,6 +1,8 @@
 #include "BibArquivo.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#include <ctype.h>
 
 FILE *abre_arquivo_leitura(char *nomeArquivo)
 {
@@ -23,18 +25,11 @@ void separarArquivosPorNota(FILE *parq)
         printf("Erro na gravação do arquivo\n");
     }
 
-    int maiorLinha = 0;
-
     while (fgets(line, 9000, parq) != NULL) // Enquanto não for o fim do arquivo, lê até o \n
     {
         int tamanhoLinha = 0;
 
         tamanhoLinha = strlen(line); // tamanho da linha
-
-        if (maiorLinha < tamanhoLinha)
-        {
-            maiorLinha = tamanhoLinha;
-        }
 
         for (int i = 0; i < tamanhoLinha; i++) // Percorrer cada posição da linha;
         {
@@ -60,7 +55,7 @@ void separarArquivosPorNota(FILE *parq)
             }
         }
     }
-    printf("%d", maiorLinha);
+
     fclose(notas1);
     fclose(notas2);
     fclose(notas3);
@@ -68,19 +63,54 @@ void separarArquivosPorNota(FILE *parq)
     fclose(notas5);
 }
 
-int arquivo_MostraConteudo(FILE *parq)
+void salvarPalavraNoArquivo(char *palavra, FILE *arquivoPalavras)
 {
-    int c;
-    if (parq == NULL)
-        return 0; // Erro: ponteiro não apontado.
-    while (1)
+
+    if (arquivoPalavras == NULL)
     {
-        c = fgetc(parq);
-        if (feof(parq))
-        {
-            break;
-        }
-        printf("%c", c);
+        printf("Error opening file!\n");
+        exit(1);
     }
-    return 1;
+
+    fprintf(arquivoPalavras, "%s\n", palavra);
+}
+
+void separarPalavrasPorDocumento(char *nomeArquivoNota, char *nomeArquivoPalavras)
+{
+
+    FILE *arquivoAberto = fopen(nomeArquivoNota, "r");
+    FILE *arquivoPalavras = fopen(nomeArquivoPalavras, "w");
+    char palavra[9000];
+    int totalPalavras = 0;
+
+    if (arquivoAberto == NULL)
+        printf("Can't open %s for reading.\n", nomeArquivoNota);
+    else
+    {
+        while (fscanf(arquivoAberto, "%s", palavra) != EOF)
+        {
+            int tamanho = strlen(palavra);
+
+            for (int i = 0; i < tamanho; i++)
+            {
+                if (ispunct(palavra[i]))
+                {
+                    palavra[i] = ' ';
+                }
+                if (isdigit(palavra[i]))
+                {
+                    palavra[i] = ' ';
+                }
+            }
+
+            if (tamanho > 3)
+            {
+                salvarPalavraNoArquivo(palavra, arquivoPalavras);
+                totalPalavras++;
+            }
+        }
+        printf("%s, possui total palavras %d\n", nomeArquivoNota, totalPalavras);
+    }
+    fclose(arquivoAberto);
+    fclose(arquivoPalavras);
 }

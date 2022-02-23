@@ -20,6 +20,11 @@ int main()
     }
 
     separarArquivosPorNota(farq);
+    separarPalavrasPorDocumento("notas1.txt", "palavras1.txt");
+    separarPalavrasPorDocumento("notas2.txt", "palavras2.txt");
+    separarPalavrasPorDocumento("notas3.txt", "palavras3.txt");
+    separarPalavrasPorDocumento("notas4.txt", "palavras4.txt");
+    separarPalavrasPorDocumento("notas5.txt", "palavras5.txt");
 
     fclose(farq);
 

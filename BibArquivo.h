@@ -6,9 +6,13 @@
 // Leitura do arquivo;
 FILE *abre_arquivo_leitura(char *nomeArquivo);
 
-int arquivo_MostraConteudo(FILE *parq);
+int arquivoMostraConteudo(FILE *parq);
 
 // Separar arquivos por nota;
 void separarArquivosPorNota(FILE *parq);
+
+void salvarPalavraNoArquivo(char *palavra, FILE *arquivoPalavras);
+
+void separarPalavrasPorDocumento(char *nomeArquivo, char *nomeArquivoPalavras);
 
 #endif
