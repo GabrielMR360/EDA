@@ -1,10 +1,10 @@
 #include "BibArquivo.h"
 #include <stdio.h>
-#include <string.h>
+#include <string.h> // necessário para strlen;
 #include <stdlib.h>
-#include <ctype.h>
+#include <ctype.h> // necessário para ispunct e isdigit;
 
-FILE *abre_arquivo_leitura(char *nomeArquivo)
+FILE *abreArquivoLeitura(char *nomeArquivo)
 {
     return fopen(nomeArquivo, "r");
 }
@@ -65,6 +65,8 @@ void separarArquivosPorNota(FILE *parq)
 
 void salvarPalavraNoArquivo(char *palavra, FILE *arquivoPalavras)
 {
+    char *palavra2;
+    char *out = palavra, *put = palavra;
 
     if (arquivoPalavras == NULL)
     {
@@ -72,19 +74,35 @@ void salvarPalavraNoArquivo(char *palavra, FILE *arquivoPalavras)
         exit(1);
     }
 
-    fprintf(arquivoPalavras, "%s\n", palavra);
+    // Remove os espaços antes de salvar as palavras no arquivo;
+    palavra2 = palavra;
+    while (*palavra2 == ' ')
+        palavra2++;
+
+    if (palavra2 != palavra)
+        memmove(palavra, palavra2, strlen(palavra2) + 1);
+
+    for (; *palavra != '\0'; ++palavra)
+    {
+        if (*palavra != ' ')
+            *put++ = *palavra;
+    }
+    *put = '\0';
+
+    // printf("%s\n", out);
+    fprintf(arquivoPalavras, "%s\n", out);
 }
 
 void separarPalavrasPorDocumento(char *nomeArquivoNota, char *nomeArquivoPalavras)
 {
 
-    FILE *arquivoAberto = fopen(nomeArquivoNota, "r");
+    FILE *arquivoAberto = abreArquivoLeitura(nomeArquivoNota);
     FILE *arquivoPalavras = fopen(nomeArquivoPalavras, "w");
     char palavra[9000];
     int totalPalavras = 0;
 
     if (arquivoAberto == NULL)
-        printf("Can't open %s for reading.\n", nomeArquivoNota);
+        printf("Nao foi possivel abrir %s para leitura.\n", nomeArquivoNota);
     else
     {
         while (fscanf(arquivoAberto, "%s", palavra) != EOF)
