@@ -50,6 +50,12 @@ int main()
             separarPalavrasPorDocumento("notas3.txt", "palavras3.txt");
             separarPalavrasPorDocumento("notas4.txt", "palavras4.txt");
             separarPalavrasPorDocumento("notas5.txt", "palavras5.txt");
+            contarPalavrasRepetidas("vocabularioNotas1.txt", "palavras1.txt");
+            contarPalavrasRepetidas("vocabularioNotas2.txt", "palavras2.txt");
+            contarPalavrasRepetidas("vocabularioNotas3.txt", "palavras3.txt");
+            contarPalavrasRepetidas("vocabularioNotas4.txt", "palavras4.txt");
+            contarPalavrasRepetidas("vocabularioNotas5.txt", "palavras5.txt");
+            excluirArquivos();
             break;
         case 3:
             printf("TF-IDF de todas as notas\n");

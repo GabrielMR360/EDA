@@ -4,6 +4,15 @@
 #include <stdlib.h>
 #include <ctype.h> // necessário para ispunct e isdigit;
 
+#define TAMLINHA 9000
+#define SIZE 256
+
+struct palavras
+{
+    char *palavra;
+    unsigned int cont;
+};
+
 FILE *abreArquivoLeitura(char *nomeArquivo)
 {
     return fopen(nomeArquivo, "r");
@@ -12,7 +21,7 @@ FILE *abreArquivoLeitura(char *nomeArquivo)
 void separarArquivosPorNota(FILE *parq)
 {
     FILE *notas1, *notas2, *notas3, *notas4, *notas5;
-    char line[9000];
+    char line[TAMLINHA];
 
     notas1 = fopen("notas1.txt", "w");
     notas2 = fopen("notas2.txt", "w");
@@ -25,7 +34,7 @@ void separarArquivosPorNota(FILE *parq)
         printf("Erro na gravação do arquivo\n");
     }
 
-    while (fgets(line, 9000, parq) != NULL) // Enquanto não for o fim do arquivo, lê até o \n
+    while (fgets(line, TAMLINHA, parq) != NULL) // Enquanto não for o fim do arquivo, lê até o \n
     {
         int tamanhoLinha = 0;
 
@@ -98,7 +107,7 @@ void separarPalavrasPorDocumento(char *nomeArquivoNota, char *nomeArquivoPalavra
 
     FILE *arquivoAberto = abreArquivoLeitura(nomeArquivoNota);
     FILE *arquivoPalavras = fopen(nomeArquivoPalavras, "w");
-    char palavra[9000];
+    char palavra[TAMLINHA];
     int totalPalavras = 0;
 
     if (arquivoAberto == NULL)
@@ -131,4 +140,75 @@ void separarPalavrasPorDocumento(char *nomeArquivoNota, char *nomeArquivoPalavra
     }
     fclose(arquivoAberto);
     fclose(arquivoPalavras);
+}
+
+int contarPalavrasRepetidas(char *nomeVocabulario, char *nomeArquivoNotas)
+{
+    FILE *arqVocabulario = fopen(nomeVocabulario, "w");
+    // Alocar memória para a primeira palavra para comparar + estrutura de palavras;
+    char *palavraChave = (char *)malloc(sizeof(char) * SIZE);
+    struct palavras *p = (struct palavras *)malloc(sizeof(struct palavras) * SIZE);
+    // Criar variável para ler palavras do arquivo;
+    FILE *listaDePalavras = abreArquivoLeitura(nomeArquivoNotas);
+    // Variável para armazenar a contagem total de palavras;
+    int totalDePalavras = 0;
+    long word_list_pos, word_list2_pos;
+
+    // Ler palavras do arquivo linha por linha;
+    while (fgets(palavraChave, SIZE, listaDePalavras) != NULL)
+    {
+        // Remove \n da linha;
+        palavraChave[strlen(palavraChave) - 1] = '\0';
+        // Inicializar membros da estrutura de palavras;
+        // -> acessa os membros da struct que é referenciado pelo ponteiro *p;
+        p->palavra = strdup(palavraChave);
+        p->cont = 0;
+        word_list_pos = ftell(listaDePalavras);
+
+        // Alocar memória para a palavra atual sendo comparada com a palavra-chave
+        char *atualPalavra = (char *)malloc(sizeof(char) * SIZE);
+        // Criar variável para ler a segunda lista de palavras do arquivo
+        // printf("%s", atualPalavra);
+        FILE *listaDePalavras2 = abreArquivoLeitura(nomeArquivoNotas);
+
+        while (fgets(atualPalavra, SIZE, listaDePalavras2) != NULL)
+        {
+            // Remove \n da linha;
+            atualPalavra[strlen(atualPalavra) - 1] = '\0';
+            // Se a atual palavra lida for igual à palavra-chave, aumenta sua contagem
+            if (strcmp(palavraChave, atualPalavra) == 0)
+            {
+                word_list2_pos = ftell(listaDePalavras2);
+                if (word_list2_pos < word_list_pos)
+                    break;
+
+                p->cont++;
+            }
+        }
+        totalDePalavras++;
+
+        if (word_list2_pos >= word_list_pos)
+            fprintf(arqVocabulario, "%s : %d\n", p->palavra, p->cont);
+
+        // Free para desalocar memória;
+        free(p->palavra);
+        free(atualPalavra);
+        fclose(listaDePalavras2);
+    }
+
+    free(p);
+    free(palavraChave);
+    fclose(listaDePalavras);
+    fclose(arqVocabulario);
+
+    return totalDePalavras;
+}
+
+void excluirArquivos()
+{
+    remove("palavras1.txt");
+    remove("palavras2.txt");
+    remove("palavras3.txt");
+    remove("palavras4.txt");
+    remove("palavras5.txt");
 }

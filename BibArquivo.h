@@ -12,10 +12,16 @@ int arquivoMostraConteudo(FILE *parq);
 // Separar arquivos por nota;
 void separarArquivosPorNota(FILE *parq);
 
-// Salva palavras no arquivo;
+// Salva palavras no arquivo e remove os espacos;
 void salvarPalavraNoArquivo(char *palavra, FILE *arquivoPalavras);
 
 // Vocabulário de cada arquivo de nota;
 void separarPalavrasPorDocumento(char *nomeArquivo, char *nomeArquivoPalavras);
+
+// Conta as palavras repetidas e grava em um novo arquivo;
+int contarPalavrasRepetidas(char *nomeVocabulario, char *nomeArquivoNotas);
+
+// Exclui arquivos de palavras após a contagem de palavras repetidas;
+void excluirArquivos();
 
 #endif
