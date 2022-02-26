@@ -3,6 +3,7 @@
 #include <string.h> // necessário para strlen;
 #include <stdlib.h>
 #include <ctype.h> // necessário para ispunct e isdigit;
+#include <stdbool.h>
 
 #define TAMLINHA 9000
 #define SIZE 256
@@ -211,4 +212,28 @@ void excluirArquivos()
     remove("palavras3.txt");
     remove("palavras4.txt");
     remove("palavras5.txt");
+}
+
+int totalDePalavrasNoArquivo(char *nomeArq)
+{
+    char palavra[20], *c;
+    int totalDePalavras = 0;
+    FILE *arq = abreArquivoLeitura(nomeArq);
+
+    if (arq == NULL)
+    {
+        printf("Erro na abertura do arquivo\n");
+    }
+
+    while (fscanf(arq, "%s", palavra) != EOF)
+    {
+        int tamanho = strlen(palavra);
+
+        if (tamanho > 3)
+        {
+            totalDePalavras++;
+        }
+    }
+
+    return totalDePalavras;
 }

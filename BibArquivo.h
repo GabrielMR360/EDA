@@ -24,4 +24,6 @@ int contarPalavrasRepetidas(char *nomeVocabulario, char *nomeArquivoNotas);
 // Exclui arquivos de palavras após a contagem de palavras repetidas;
 void excluirArquivos();
 
+int totalDePalavrasNoArquivo(char *nomeArq);
+
 #endif
