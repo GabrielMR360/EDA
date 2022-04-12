@@ -1,9 +1,9 @@
 all:
 	gcc -c src/bibliotecaABP.c -I include/ -o obj/bibliotecaABP.o
-	gcc apps/main.c obj/* -I include/ -o bin/main
+	gcc app/main.c obj/* -I include/ -o bin/main.exe
 
 run:
-	./bin/main
+	./bin/main.exe
 
 clean:
 	rm bin/* obj/* 
