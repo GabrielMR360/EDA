@@ -1,0 +1,22 @@
+void contagem_crescente(int i, int j, int sequencia[6], int contador[6]){
+  for(i = 0; i < 6; i++){
+    if (i == 0){
+      contador[i] = sequencia[i];
+    }
+    else if (sequencia[i] > contador[i - 1]){
+      contador[i] = sequencia[i];
+    }
+      else if(sequencia[i] == contador[i - 1]){
+        contador[i] = sequencia[i];
+      }
+    else{
+      for(j = 1; j < 6; j++){
+        if (sequencia[i] < contador[i - j]){
+          contador[i - j + 1] = contador[i - j];
+          contador[i - j] = sequencia[i];
+        }
+        else{j = 99;}
+      }
+    }
+  }
+}
