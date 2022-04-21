@@ -42,8 +42,8 @@ void imprime(No *raiz)
 {
     if (raiz != NULL)
     {
-        printf("%d ", raiz->chave);
         imprime(raiz->esquerda);
+        printf("%d ", raiz->chave);
         imprime(raiz->direita);
     }
 }
@@ -55,7 +55,7 @@ No *geraABP()
 
     No *raiz = inicializa();
 
-    testeA = abreArquivoLeitura("Exemplo-TesteC.csv");
+    testeA = abreArquivoLeitura("Exemplo-TesteB.csv");
 
     if (testeA == NULL)
     {
