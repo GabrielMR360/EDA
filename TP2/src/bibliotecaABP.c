@@ -1,6 +1,5 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
 #include "bibliotecaABP.h"
 
 FILE *abreArquivoLeitura(char *nomeArquivo)
@@ -42,10 +41,14 @@ No *geraABP()
 {
     FILE *testeA;
     int numeros[50];
+    char *nomeArq;
 
     No *raiz = inicializa();
 
-    testeA = abreArquivoLeitura("Exemplo-TesteA.csv");
+    printf("Digite o nome do arquivo: ");
+    scanf("%s", nomeArq);
+
+    testeA = abreArquivoLeitura(nomeArq);
 
     if (testeA == NULL)
     {

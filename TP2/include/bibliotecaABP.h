@@ -15,14 +15,18 @@ No *inicializa();
 
 No *inserir(No *raiz, int valor);
 
-void imprime(No *raiz);
-
 No *geraABP();
 
+int max(int num1, int num2);
+
+int altura(No *raiz);
+
+void percorreArvore(No *raiz);
+
+int geraFatorBalanceamento(No *raiz);
+
+void imprime(No *raiz);
+
 void libera(No *raiz);
-
-void percorreArvore (No* raiz);
-
-int geraFatorBalanceamento(No* raiz);
 
 #endif

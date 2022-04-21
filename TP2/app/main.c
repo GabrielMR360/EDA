@@ -7,8 +7,9 @@ int main()
     int opcao = 0;
     No *raiz = inicializa();
 
-    printf("\n\n\nTrabalho Prático 02\n");
-    printf("Árvore Binária de Pesquisa\n\n");
+    printf("\n\n\n");
+    printf("|---------------Trabalho Prático 02------------|\n");
+    printf("|-----------Árvore Binária de Pesquisa---------|\n\n");
 
     while (opcao != 4)
     {
@@ -26,18 +27,19 @@ int main()
         switch (opcao)
         {
         case 1:
-            printf("\n\n\nGerando ABP...\n");
             raiz = geraABP();
-            imprime(raiz);
-            printf("\n\n");
+            printf("\n\n\nGerando ABP...");
+            printf("\n\n\n\nABP gerada!!\n\n\n");
             break;
         case 2:
-            printf("\n\n\nCalculando fator de balanceamento...\n");
+            printf("\n\n\nCalculando fator de balanceamento...");
             percorreArvore(raiz);
+            printf("\n\n\n\nFator de balanceamento calculado para cada nó!!\n\n\n");
             break;
         case 3:
-            printf("\n\n\nImprindo ABP...\n");
+            printf("\n\n\nImprindo ABP...\n\n\n");
             imprime(raiz);
+            printf("\n\n\n");
             break;
         case 4:
             printf("\n\n\nSaindo...\n");
