@@ -33,9 +33,11 @@ int main()
             break;
         case 2:
             printf("\n\n\nCalculando fator de balanceamento...\n");
+            percorreArvore(raiz);
             break;
         case 3:
             printf("\n\n\nImprindo ABP...\n");
+            imprime(raiz);
             break;
         case 4:
             printf("\n\n\nSaindo...\n");

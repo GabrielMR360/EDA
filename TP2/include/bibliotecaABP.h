@@ -21,4 +21,8 @@ No *geraABP();
 
 void libera(No *raiz);
 
+void percorreArvore (No* raiz);
+
+int geraFatorBalanceamento(No* raiz);
+
 #endif

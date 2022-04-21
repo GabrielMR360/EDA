@@ -38,16 +38,6 @@ No *inserir(No *raiz, int valor)
     return raiz;
 }
 
-void imprime(No *raiz)
-{
-    if (raiz != NULL)
-    {
-        imprime(raiz->esquerda);
-        printf("%d ", raiz->chave);
-        imprime(raiz->direita);
-    }
-}
-
 No *geraABP()
 {
     FILE *testeA;
@@ -55,7 +45,7 @@ No *geraABP()
 
     No *raiz = inicializa();
 
-    testeA = abreArquivoLeitura("Exemplo-TesteB.csv");
+    testeA = abreArquivoLeitura("Exemplo-TesteA.csv");
 
     if (testeA == NULL)
     {
@@ -69,6 +59,59 @@ No *geraABP()
     }
     fclose(testeA);
     return raiz;
+}
+
+int max(int num1, int num2)
+{
+    if (num1 > num2)
+    {
+        return num1;
+    }
+    else
+    {
+        return num2;
+    }
+}
+
+int altura(No *raiz)
+{
+    // caso a arvore seja nula
+    if (raiz == NULL)
+    {
+        return 0;
+    }
+
+    // recursão que retorna a altura da direita e esquerda
+    return 1 + max(altura(raiz->esquerda), altura(raiz->direita));
+}
+
+// percorre a árvore gerando o fator de balanceamento
+void percorreArvore(No *raiz)
+{
+    if (raiz == NULL)
+        return;
+    raiz->fatorDeBalanceamento = geraFatorBalanceamento(raiz);
+    percorreArvore(raiz->esquerda);
+    percorreArvore(raiz->direita);
+}
+
+// gera fator de balanceamento do nó
+int geraFatorBalanceamento(No *raiz)
+{
+    if (raiz == NULL)
+        return 0;
+    return abs(altura(raiz->esquerda) - altura(raiz->direita));
+}
+
+void imprime(No *raiz)
+{
+    if (raiz != NULL)
+    {
+        imprime(raiz->esquerda);
+        printf("Chave %d ", raiz->chave);
+        printf("Fator de Balanceamte do nó %d \n", raiz->fatorDeBalanceamento);
+        imprime(raiz->direita);
+    }
 }
 
 void libera(No *raiz)
