@@ -44,6 +44,7 @@ int main()
         case 4:
             printf("\n\n\nSaindo...\n");
             libera(raiz);
+            exit(0);
             break;
         default:
             printf("Opção inválida!\n");
